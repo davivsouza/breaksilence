@@ -1,15 +1,29 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { AuthRoutes } from "./auth.routes";
-import { Box } from "native-base";
 import { StatusBar } from "expo-status-bar";
+import { useAuth } from "../hooks/useAuth";
+import { AppRoutes } from "./app.routes";
+import { Loading } from "@components/Loading";
 
 export function Routes() {
+  const { user, isLoadingUserStorageData } = useAuth();
+
   return (
     <>
       <StatusBar translucent backgroundColor="transparent" />
-      <NavigationContainer>
-        <AuthRoutes />
-      </NavigationContainer>
+
+      {isLoadingUserStorageData && <Loading />}
+      {!isLoadingUserStorageData && (
+        <NavigationContainer>
+          {user.isLogged ? (
+            <AppRoutes />
+          ) : (
+            <AuthRoutes
+              hasAlreadyTriedToLogin={user.hasAlreadySeenTheIntroduction}
+            />
+          )}
+        </NavigationContainer>
+      )}
     </>
   );
 }

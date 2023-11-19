@@ -15,10 +15,13 @@ type AuthRoutes = {
 export type AuthNavigatorRouteProps = NativeStackNavigationProp<AuthRoutes>;
 
 const { Navigator, Screen } = createNativeStackNavigator<AuthRoutes>();
-
-export function AuthRoutes() {
+type Props = {
+  hasAlreadyTriedToLogin?: boolean
+}
+export function AuthRoutes({hasAlreadyTriedToLogin}:Props) {
   return (
     <Navigator
+    initialRouteName={hasAlreadyTriedToLogin ? 'signIn' : 'introduction'}
       screenOptions={{
         headerShown: false,
       }}

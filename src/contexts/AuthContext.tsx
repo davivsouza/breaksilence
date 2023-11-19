@@ -30,7 +30,8 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
   }
 
   async function sendReport(report: Report) {
-    const reportsData = [...reports, report]
+    const reportsData = [...user.reports, report]
+    userUpdate({ ...user, reports: reportsData})
     await userStorageSave({ ...user, reports: reportsData});
     setReports(reportsData)
   }
@@ -38,13 +39,13 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
   async function signUp(user: User) {
     try {
       setIsLoadingUserStorageData(true);
-      setUser(user);
       await userStorageSave(user);
+      setUser(user);
       
-      
+    
       
     } catch (error) {
-      console.log(error);
+     return
     } finally {
       setIsLoadingUserStorageData(false);
     }
@@ -56,6 +57,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 
       if (cpf === userSignedUp.cpf && password === userSignedUp.password) {
         userUpdate({ ...userSignedUp, isLogged: true });
+        
       } else {
         throw Error;
       }

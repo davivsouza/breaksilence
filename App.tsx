@@ -20,6 +20,7 @@ export default function App() {
 
   return (
     <NativeBaseProvider theme={THEME} >
+      {!fontsLoaded && <Loading/>}
       {fontsLoaded &&
         (
             <AuthContextProvider>
@@ -27,7 +28,6 @@ export default function App() {
             </AuthContextProvider>
         ) 
       }
-      {!fontsLoaded && <Loading/>}
     </NativeBaseProvider>
   );
 }

@@ -68,7 +68,7 @@ export function SignUp() {
       region: 'São Paulo'
     } as Location})
 
-    console.log(user);
+    
     
   }
 
